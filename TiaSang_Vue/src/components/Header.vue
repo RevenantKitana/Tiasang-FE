@@ -57,6 +57,8 @@
 </template>
 
 <script>
+import { formatCurrentDate } from '@/utils/dateFormatter'
+
 export default {
   name: 'Header',
   data() {
@@ -65,14 +67,9 @@ export default {
     }
   },
   mounted() {
-    this.updateDate();
+    this.currentDate = formatCurrentDate();
   },
   methods: {
-    updateDate() {
-      const options = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
-      const today = new Date();
-      this.currentDate = today.toLocaleDateString('vi-VN', options);
-    },
     handleSearch() {
       this.$emit('search');
     },

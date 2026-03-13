@@ -69,6 +69,7 @@ import NewsCard from '../../components/NewsCard.vue'
 import SponsorBlock from '../../components/SponsorBlock.vue'
 import SideBar from '../../components/SideBar.vue'
 import Footer from '../../components/Footer.vue'
+import { pageEventMethods } from '@/composables/usePageEvents'
 
 export default {
   name: 'NenTangKienTaoPage',
@@ -217,19 +218,7 @@ export default {
     }
   },
   methods: {
-    handleSearch() {
-      console.log('Search triggered');
-    },
-    handleLogin() {
-      console.log('Login triggered');
-    },
-    handleCategorySelect(category) {
-      const routes = {
-        'Nền tảng & Kiến tạo': '/category/nen-tang-kien-tao',
-        'Diễn đàn': '/forum'
-      }
-      if (routes[category]) this.$router.push(routes[category])
-    },
+    ...pageEventMethods(),
     nextPage() {
       if (this.currentPage < 4) {
         this.currentPage++;

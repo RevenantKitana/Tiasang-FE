@@ -355,6 +355,7 @@ import Header from '../components/Header.vue'
 import Navigation from '../components/Navigation.vue'
 import Footer from '../components/Footer.vue'
 import NewsCard from '../components/NewsCard.vue'
+import { pageEventMethods } from '@/composables/usePageEvents'
 
 export default {
   name: 'HomePage',
@@ -592,15 +593,7 @@ export default {
     }
   },
   methods: {
-    handleSearch() {},
-    handleLogin() {},
-    handleCategorySelect(category) {
-      const routes = {
-        'Nền tảng & Kiến tạo': '/category/nen-tang-kien-tao',
-        'Diễn đàn': '/forum'
-      }
-      if (routes[category]) this.$router.push(routes[category])
-    }
+    ...pageEventMethods()
   }
 }
 </script>

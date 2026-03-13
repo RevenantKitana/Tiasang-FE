@@ -71,19 +71,13 @@
 </template>
 
 <script>
+import { FOOTER_CATEGORIES } from '@/config/categories'
+
 export default {
   name: 'Footer',
   data() {
     return {
-      categories: [
-        'Chuyên đề',
-        'Khoa học - Công nghệ',
-        'Giáo dục',
-        'Sức khỏe',
-        'Du lịch',
-        'Giải trí',
-        'Nền tảng & Kiến tạo'
-      ],
+      categories: FOOTER_CATEGORIES,
       editor: 'Phạm Văn Hiếu',
       contactInfo: [
         'Địa chỉ: Tầng 10, Tòa A FPT Tower, số 10 Phạm Văn Bạch, phường Cầu Giấy, Hà Nội',

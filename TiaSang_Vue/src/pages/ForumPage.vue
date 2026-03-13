@@ -174,7 +174,9 @@
 import Header from '../components/Header.vue'
 import Navigation from '../components/Navigation.vue'
 import CategoryBanner from '../components/CategoryBanner.vue'
+import CategoryBox from '../components/CategoryBox.vue'
 import Footer from '../components/Footer.vue'
+import { pageEventMethods } from '@/composables/usePageEvents'
 
 export default {
   name: 'ForumPage',
@@ -182,6 +184,7 @@ export default {
     Header,
     Navigation,
     CategoryBanner,
+    CategoryBox,
     Footer
   },
   data() {
@@ -291,15 +294,7 @@ export default {
     }
   },
   methods: {
-    handleSearch() {},
-    handleLogin() {},
-    handleCategorySelect(category) {
-      const routes = {
-        'Nền tảng & Kiến tạo': '/category/nen-tang-kien-tao',
-        'Diễn đàn': '/forum'
-      }
-      if (routes[category]) this.$router.push(routes[category])
-    },
+    ...pageEventMethods(),
     handleSubmitPost() {
       // TODO: mở modal/form tạo bài viết mới
     },

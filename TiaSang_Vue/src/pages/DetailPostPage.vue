@@ -233,6 +233,7 @@ import Navigation from '../components/Navigation.vue'
 import Sidebar from '../components/Sidebar.vue'
 import NewsCard from '../components/NewsCard.vue'
 import Footer from '../components/Footer.vue'
+import { pageEventMethods } from '@/composables/usePageEvents'
 
 export default {
   name: 'DetailPostPage',
@@ -412,15 +413,7 @@ export default {
     }
   },
   methods: {
-    handleSearch() {
-      this.$emit('search')
-    },
-    handleLogin() {
-      this.$emit('login')
-    },
-    handleCategorySelect(category) {
-      this.$router.push('/category/' + category)
-    },
+    ...pageEventMethods(),
     submitComment() {
       if (!this.newComment.trim()) return
       this.comments.unshift({

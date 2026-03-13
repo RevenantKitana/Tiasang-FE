@@ -16,21 +16,14 @@
 </template>
 
 <script>
+import { NAV_CATEGORIES } from '@/config/categories'
+
 export default {
   name: 'Navigation',
   data() {
     return {
       isHidden: false,
-      categories: [
-        'Chuyên đề',
-        'Khoa học - Công nghệ',
-        'Giáo dục',
-        'Sức khỏe',
-        'Du lịch',
-        'Giải trí',
-        'Nền tảng & Kiến tạo',
-        'Diễn đàn'
-      ]
+      categories: NAV_CATEGORIES
     }
   },
   mounted() {
