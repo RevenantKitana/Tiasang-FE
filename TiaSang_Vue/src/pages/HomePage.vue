@@ -2,511 +2,589 @@
   <div id="home-page">
     <Header @search="handleSearch" @login="handleLogin" />
     <Navigation @category-selected="handleCategorySelect" />
-    
-    <main class="page-body">
-      <!-- SECTION TYPE 1: Featured Article Large + 2 Stories -->
+
+    <!--  SECTION TYPE 1: Featured 720×720 + 2 Stories 345×306 + Feature Quote  -->
+    <div class="page-body">
       <section class="section-type-1">
-        <div class="featured-article-large">
-          <img :src="sectionType1.featuredArticle.image" :alt="sectionType1.featuredArticle.title" />
-          <div class="article-text">
-            <h3 class="article-title">{{ sectionType1.featuredArticle.title }}</h3>
-            <p class="article-description">{{ sectionType1.featuredArticle.description }}</p>
-            <div class="article-meta">
-              <span class="author">{{ sectionType1.featuredArticle.author }}</span>
-              <span class="date">{{ sectionType1.featuredArticle.date }}</span>
+        <!-- Featured Article Large 720×720 -->
+        <router-link :to="`/post/${s1.featured.id}`" class="s1-featured-link">
+          <div class="s1-featured">
+            <img :src="s1.featured.image" :alt="s1.featured.title" class="s1-featured-img" />
+            <div class="s1-featured-overlay">
+              <h2 class="s1-featured-title">{{ s1.featured.title }}</h2>
+              <p class="s1-featured-desc">{{ s1.featured.description }}</p>
+              <div class="s1-featured-meta">
+                <span>{{ s1.featured.author }}</span>
+                <span>{{ s1.featured.date }}</span>
+              </div>
+            </div>
+          </div>
+        </router-link>
+
+        <!-- 2 Other Stories 345×306 -->
+        <div class="s1-stories">
+          <div v-for="(story, i) in s1.stories" :key="i" class="s1-story-unit">
+            <img :src="story.image" :alt="story.title" class="s1-story-img" />
+            <div class="s1-story-info">
+              <h4 class="s1-story-title">{{ story.title }}</h4>
+              <div class="s1-story-meta">
+                <span class="s1-story-author">{{ story.author }}</span>
+                <span class="s1-story-date">{{ story.date }}</span>
+                <span class="s1-story-comments">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:3px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                  {{ story.comments }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="other-stories">
-          <div 
-            v-for="(story, index) in sectionType1.otherStories" 
-            :key="index"
-            class="story-unit"
-          >
-            <img :src="story.image" :alt="story.title" class="story-image" />
-            <div class="story-text">
-              <h4 class="story-title">{{ story.title }}</h4>
-              <span class="story-author">{{ story.author }}</span>
-              <span class="story-date">{{ story.date }}</span>
-              <span class="comment-count">Bình luận: {{ story.comments }}</span>
-            </div>
+        <!-- Feature Quote 1100×169 -->
+        <div class="s1-quote">
+          <div class="s1-quote-icon">
+            <svg width="163" height="163" viewBox="0 0 163 163" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <text x="10" y="140" font-size="160" font-family="Georgia, serif" fill="#F4C660" opacity="0.85">"</text>
+            </svg>
           </div>
-        </div>
-
-        <div class="feature-quote">
-          <div class="quote-icon">
-            <i class="quote-mark">"</i>
-          </div>
-          <div class="quote-content">
-            <p class="quote-text">{{ sectionType1.quote.text }}</p>
-            <p class="quote-author">— {{ sectionType1.quote.author }}</p>
-            <a href="#" class="quote-nav">Xem chi tiết →</a>
+          <div class="s1-quote-body">
+            <p class="s1-quote-text">{{ s1.quote.text }}</p>
+            <p class="s1-quote-author">{{ s1.quote.author }}</p>
+            <a href="#" class="s1-quote-nav">Xem chi tiết →</a>
           </div>
         </div>
       </section>
 
-      <div class="divider"></div>
+      <div class="page-divider"></div>
+    </div>
 
-      <!-- SECTION TYPE 2: Search + Main Content (Featured + Scroll List) + Sub Content (Carousel) -->
-      <section class="section-type-2">
-        <div class="section-header">
-          <h2 class="section-title">{{ sectionType2.title }}</h2>
-          <div class="search-bar">
-            <input 
-              type="text" 
-              class="search-input" 
-              placeholder="Tìm kiếm..."
-              @input="handleSearchInput"
-            />
-            <button class="search-btn" @click="handleSearch">
-              <i class="search-icon">🔍</i>
+    <!--  SECTION TYPE 2: Màu tím than, full-width  -->
+    <div class="s2-outer">
+      <div class="s2-inner">
+        <section class="section-type-2">
+          <!-- Header: Title (trái) + Xem thêm (phải) -->
+          <div class="s2-header">
+            <h2 class="s2-section-title">{{ s2.title }}</h2>
+            <a href="#" class="s2-readmore">Xem thêm</a>
+          </div>
+
+          <!-- Search Bar 1100×24 -->
+          <div class="s2-search-bar">
+            <input type="text" class="s2-search-input" :placeholder="'Tìm kiếm trong ' + s2.title + '...'" />
+            <button class="s2-search-btn" aria-label="Tìm kiếm">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="11" cy="11" r="7" stroke="#fff" stroke-width="2"/>
+                <path d="m21 21-4.35-4.35" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+              </svg>
             </button>
           </div>
-          <a href="#" class="read-more">Xem thêm →</a>
-        </div>
 
-        <div class="main-content">
-          <!-- Featured Article -->
-          <div class="featured-item">
-            <img :src="sectionType2.featuredArticle.image" :alt="sectionType2.featuredArticle.title" />
-            <div class="featured-text">
-              <h3>{{ sectionType2.featuredArticle.title }}</h3>
-              <p class="featured-author">{{ sectionType2.featuredArticle.author }}</p>
-            </div>
-          </div>
-
-          <!-- Standard Article Scroll List -->
-          <div class="article-scroll-list">
-            <div 
-              v-for="(article, index) in sectionType2.articleList" 
-              :key="index"
-              class="article-item"
-            >
-              <div class="article-info">
-                <h4 class="article-title">{{ article.title }}</h4>
-                <p class="article-author">{{ article.author }}</p>
+          <!-- Main Content: Featured (trái 670×461) + Scroll List (phải 400px) -->
+          <div class="s2-main">
+            <!-- Featured Article LEFT 670×461 -->
+            <div class="s2-featured">
+              <img :src="s2.featured.image" :alt="s2.featured.title" class="s2-featured-img" />
+              <div class="s2-featured-overlay">
+                <h3 class="s2-featured-title">{{ s2.featured.title }}</h3>
+                <p class="s2-featured-author">{{ s2.featured.author }}</p>
               </div>
-              <img :src="article.image" :alt="article.title" class="article-thumb" />
+            </div>
+
+            <!-- Scroll List RIGHT 400px + fade bottom -->
+            <div class="s2-scroll-wrapper">
+              <div class="s2-scroll-list">
+                <div v-for="(art, i) in s2.articleList" :key="i" class="s2-list-item">
+                  <div class="s2-item-text">
+                    <h4 class="s2-item-title">{{ art.title }}</h4>
+                    <p class="s2-item-author">{{ art.author }}</p>
+                  </div>
+                  <img :src="art.image" :alt="art.title" class="s2-item-thumb" />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="sub-content">
-          <p class="sub-title">{{ sectionType2.subContentTitle }}</p>
-          <div class="category-carousel">
-            <div 
-              v-for="(category, index) in sectionType2.categories" 
-              :key="index"
-              class="category-item"
-            >
-              <img :src="category.image" :alt="category.name" />
-              <p class="category-name">{{ category.name }}</p>
+          <!-- Sub Content: "Chuyên đề khác" + Carousel 1100×168 -->
+          <div class="s2-sub">
+            <p class="s2-sub-label">{{ s2.subLabel }}</p>
+            <div class="s2-carousel">
+              <div v-for="(cat, i) in s2.categories" :key="i" class="s2-cat-item">
+                <img :src="cat.image" :alt="cat.name" class="s2-cat-img" />
+                <span class="s2-cat-name">{{ cat.name }}</span>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
+    </div>
 
-      <div class="divider"></div>
+    <!--  SECTIONS 3–8: nền trắng  -->
+    <div class="page-body page-body-light">
 
-      <!-- SECTION TYPE 3: Forum Main + Sub Lists -->
+      <div class="page-divider"></div>
+
+      <!--  SECTION TYPE 3: Diễn đàn — Main 720px + Sub 345px  -->
       <section class="section-type-3">
-        <h2 class="section-title">{{ sectionType3.title }}</h2>
-        
-        <div class="forum-container">
-          <div class="forum-main-list">
-            <p class="list-title">Bài viết chính</p>
-            <div 
-              v-for="(post, index) in sectionType3.mainPosts" 
-              :key="index"
-              class="forum-item"
-            >
-              <img :src="post.image" :alt="post.title" class="post-image" />
-              <div class="post-info">
-                <h4>{{ post.title }}</h4>
-                <div class="post-meta">
-                  <span class="author">{{ post.author }}</span>
-                  <span class="date">{{ post.date }}</span>
-                  <span class="comments">💬 {{ post.comments }}</span>
-                </div>
+        <!-- Main List 720px -->
+        <div class="s3-main">
+          <p class="s3-main-label">Diễn đàn</p>
+          <div
+            v-for="(post, i) in s3.mainPosts"
+            :key="i"
+            class="s3-forum-item"
+          >
+            <img :src="post.image" :alt="post.title" class="s3-post-img" />
+            <div class="s3-post-info">
+              <h3 class="s3-post-title">{{ post.title }}</h3>
+              <div class="s3-post-meta">
+                <img :src="post.authorAvatar" class="s3-avatar" alt="avatar" />
+                <span class="s3-author-text">{{ post.author }}</span>
+                <span class="s3-meta-sep">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="vertical-align:middle"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#222" stroke-width="2" stroke-linejoin="round"/></svg>
+                  {{ post.comments }}
+                </span>
+                <span class="s3-date">{{ post.date }}</span>
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="forum-sub-list">
-            <p class="list-title">{{ sectionType3.subListTitle }}</p>
-            <div 
-              v-for="(post, index) in sectionType3.subPosts" 
-              :key="index"
-              class="sub-post-item"
-            >
-              <h5>{{ post.title }}</h5>
-              <p class="comments">💬 {{ post.comments }} bình luận</p>
-            </div>
-            <button class="btn-create-post">+ Tạo bài viết mới</button>
+        <!-- Sub List 345px -->
+        <div class="s3-sub">
+          <h3 class="s3-sub-title">Thảo luận</h3>
+          <div
+            v-for="(post, i) in s3.subPosts"
+            :key="i"
+            class="s3-sub-item"
+          >
+            <h4 class="s3-sub-post-title">{{ post.title }}</h4>
+            <p class="s3-sub-comments">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-right:3px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#7F7F7F" stroke-width="2" stroke-linejoin="round"/></svg>
+              {{ post.comments }} bình luận
+            </p>
           </div>
+          <button class="s3-btn-create">+ Tạo bài viết mới</button>
         </div>
       </section>
 
-      <div class="divider"></div>
+      <div class="page-divider"></div>
 
-      <!-- SECTION TYPE 4: Article List + Sub List with Author Info -->
+      <!--  SECTION TYPE 4: News List + Sub Content 345px + Ads 970×223  -->
       <section class="section-type-4">
-        <h2 class="section-title">{{ sectionType4.title }}</h2>
-
-        <div class="content-layout">
-          <div class="main-articles">
-            <div 
-              v-for="(article, index) in sectionType4.articles" 
-              :key="index"
-              class="article-card"
-            >
-              <img :src="article.image" :alt="article.title" />
-              <div class="card-info">
-                <h4>{{ article.title }}</h4>
-                <p class="description">{{ article.description }}</p>
-                <p class="author">{{ article.author }}</p>
-              </div>
-            </div>
+        <div class="s4-layout">
+          <!-- Main List 720px — dùng NewsCard giống NenTangKienTao -->
+          <div class="s4-main-list">
+            <NewsCard
+              v-for="(news, i) in s4.newsList"
+              :key="i"
+              :news="news"
+            />
           </div>
 
-          <div class="sub-section">
-            <p class="sub-title">{{ sectionType4.subTitle }}</p>
-            <a href="#" class="read-more-btn">Xem thêm</a>
-            <div 
-              v-for="(post, index) in sectionType4.subPosts" 
-              :key="index"
-              class="sub-post"
+          <!-- Sub Content 345px -->
+          <div class="s4-sub">
+            <div class="s4-sub-header">
+              <h3 class="s4-sub-title">{{ s4.subTitle }}</h3>
+              <a href="#" class="s4-sub-readmore">Xem thêm</a>
+            </div>
+
+            <div
+              v-for="(post, i) in s4.subPosts"
+              :key="i"
+              class="s4-sub-post"
             >
-              <h5>{{ post.title }}</h5>
-              <p class="description">{{ post.description }}</p>
-              <div class="author-info">
-                <img :src="post.authorAvatar" :alt="post.author" class="author-avatar" />
-                <div>
-                  <p class="author-name">{{ post.author }}</p>
-                  <p class="author-job">{{ post.job }}</p>
+              <div class="s4-sub-divider"></div>
+              <div class="s4-sub-content">
+                <div class="s4-sub-texts">
+                  <h4 class="s4-sub-post-title">{{ post.title }}</h4>
+                  <p class="s4-sub-post-desc">{{ post.description }}</p>
+                </div>
+                <div class="s4-sub-author">
+                  <img :src="post.authorAvatar" :alt="post.author" class="s4-author-avatar" />
+                  <div class="s4-author-info">
+                    <p class="s4-author-name">{{ post.author }}</p>
+                    <p class="s4-author-job">{{ post.job }}</p>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="ads-banner">📢 Quảng cáo</div>
           </div>
+        </div>
+
+        <!-- Ads Banner 970×223 -->
+        <div class="s4-ads-wrap">
+          <div class="s4-ads-banner bg-cover" style="background-image: url('/image_pack/ads_at_last.png');" aria-label="Quảng cáo banner"></div>
         </div>
       </section>
 
-      <div class="divider"></div>
+      <div class="page-divider"></div>
 
-      <!-- SECTION TYPE 5: Featured + 2 Others -->
+      <!--  SECTION TYPE 5: Khoa học & Công nghệ — Featured 720px + 2 Others 345px  -->
       <section class="section-type-5">
-        <h2 class="section-title">{{ sectionType5.title }}</h2>
-
-        <div class="featured-article">
-          <img :src="sectionType5.featured.image" :alt="sectionType5.featured.title" />
-          <div class="featured-info">
-            <h3>{{ sectionType5.featured.title }}</h3>
-            <p>{{ sectionType5.featured.description }}</p>
-            <p class="author">{{ sectionType5.featured.author }}</p>
-          </div>
+        <div class="s5-header">
+          <h2 class="s5-section-title">{{ s5.title }}</h2>
+          <a href="#" class="s5-readmore">Xem thêm</a>
         </div>
 
-        <div class="others-articles">
-          <div 
-            v-for="(article, index) in sectionType5.others" 
-            :key="index"
-            class="other-article"
-          >
-            <img :src="article.image" :alt="article.title" />
-            <h4>{{ article.title }}</h4>
-            <p class="author">{{ article.author }}</p>
+        <div class="s5-content">
+          <!-- Featured LEFT 720px -->
+          <div class="s5-featured">
+            <img :src="s5.featured.image" :alt="s5.featured.title" class="s5-featured-img" />
+            <div class="s5-featured-text">
+              <h3 class="s5-featured-title">{{ s5.featured.title }}</h3>
+              <p class="s5-featured-desc">{{ s5.featured.description }}</p>
+              <p class="s5-featured-author">{{ s5.featured.author }}</p>
+            </div>
+          </div>
+
+          <!-- 2 Others stacked RIGHT, each 345px -->
+          <div class="s5-others">
+            <div v-for="(art, i) in s5.others" :key="i" class="s5-other-item">
+              <img :src="art.image" :alt="art.title" class="s5-other-img" />
+              <div class="s5-other-text">
+                <h4 class="s5-other-title">{{ art.title }}</h4>
+                <p class="s5-other-author">{{ art.author }}</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <div class="divider"></div>
+      <div class="page-divider"></div>
 
-      <!-- SECTION TYPE 6: Read More + Article List -->
+      <!--  SECTION TYPE 6: 3 Articles 345px — flex row  -->
       <section class="section-type-6">
-        <h2 class="section-title">{{ sectionType6.title }}</h2>
-        <a href="#" class="read-more-btn">Xem thêm</a>
+        <div class="s6-header">
+          <h2 class="s6-section-title">{{ s6.title }}</h2>
+          <a href="#" class="s6-readmore">Xem thêm</a>
+        </div>
 
-        <div class="article-list">
-          <div 
-            v-for="(article, index) in sectionType6.articles" 
-            :key="index"
-            class="list-item"
-          >
-            <img :src="article.image" :alt="article.title" />
-            <div class="item-info">
-              <h4>{{ article.title }}</h4>
-              <p class="author">{{ article.author }}</p>
+        <div class="s6-article-list">
+          <div v-for="(art, i) in s6.articles" :key="i" class="s6-article-item">
+            <img :src="art.image" :alt="art.title" class="s6-article-img" />
+            <div class="s6-article-text">
+              <h4 class="s6-article-title">{{ art.title }}</h4>
+              <p class="s6-article-author">{{ art.author }}</p>
             </div>
           </div>
         </div>
       </section>
 
-      <div class="divider"></div>
+      <div class="page-divider"></div>
 
-      <!-- SECTION TYPE 7: Title + Navigation + Article List -->
+      <!--  SECTION TYPE 7: Title + Nav buttons + Carousel 250×269  -->
       <section class="section-type-7">
-        <div class="section-header">
-          <h2 class="section-title">{{ sectionType7.title }}</h2>
-          <a href="#" class="nav-button">→</a>
+        <div class="s7-header">
+          <h2 class="s7-section-title">{{ s7.title }}</h2>
+          <div class="s7-nav-btns">
+            <button class="s7-nav-btn" aria-label="Trước">‹</button>
+            <button class="s7-nav-btn" aria-label="Tiếp">›</button>
+          </div>
         </div>
 
-        <div class="article-grid">
-          <div 
-            v-for="(article, index) in sectionType7.articles" 
-            :key="index"
-            class="grid-item"
-          >
-            <img :src="article.image" :alt="article.title" />
-            <h5>{{ article.title }}</h5>
+        <div class="s7-article-list">
+          <div v-for="(art, i) in s7.articles" :key="i" class="s7-article-item">
+            <img :src="art.image" :alt="art.title" class="s7-article-img" />
+            <div class="s7-title-overlay">
+              <span>{{ art.title }}</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <div class="divider"></div>
+      <div class="page-divider"></div>
 
-      <!-- SECTION TYPE 8: Multi-Category + Sidebar Ads -->
+      <!--  SECTION TYPE 8: Left 720px (Cat1+Cat2) + Sidebar Ads 320px  -->
       <section class="section-type-8">
-        <div class="categories-section">
-          <!-- Category Type 1 -->
-          <div class="category-block type-1">
-            <div class="category-header">
-              <h3>{{ sectionType8.category1.name }}</h3>
-              <a href="#" class="read-more">Xem thêm</a>
+        <!-- LEFT column 720px: Cat1 + Cat2 stacked -->
+        <div class="s8-left">
+          <!-- Category 1: "Hồ sơ và nhân vật" — 2 articles 345px side by side -->
+          <div class="s8-cat-block">
+            <div class="s8-cat-header">
+              <h2 class="s8-cat-title">{{ s8.cat1.name }}</h2>
+              <a href="#" class="s8-cat-readmore">Xem thêm</a>
             </div>
-            <div class="category-articles">
-              <div 
-                v-for="(article, index) in sectionType8.category1.articles" 
-                :key="index"
-                class="category-article"
-              >
-                <img :src="article.image" :alt="article.title" />
-                <div class="article-info">
-                  <h5>{{ article.title }}</h5>
-                  <p class="author">{{ article.author }}</p>
+            <div class="s8-cat1-articles">
+              <div v-for="(art, i) in s8.cat1.articles" :key="i" class="s8-cat1-item">
+                <img :src="art.image" :alt="art.title" class="s8-cat1-img" />
+                <div class="s8-cat1-text">
+                  <h4 class="s8-art-title">{{ art.title }}</h4>
+                  <p class="s8-art-author">{{ art.author }}</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Category Type 2 -->
-          <div class="category-block type-2">
-            <div class="category-header">
-              <h3>{{ sectionType8.category2.name }}</h3>
-              <a href="#" class="read-more">Xem thêm</a>
+          <!-- Category 2 — 1 article horizontal: image 347×208 + text 350px -->
+          <div class="s8-cat-block">
+            <div class="s8-cat-header">
+              <h2 class="s8-cat-title">{{ s8.cat2.name }}</h2>
+              <a href="#" class="s8-cat-readmore">Xem thêm</a>
             </div>
-            <div class="category-articles">
-              <div 
-                v-for="(article, index) in sectionType8.category2.articles" 
-                :key="index"
-                class="category-article"
-              >
-                <img :src="article.image" :alt="article.title" />
-                <div class="article-info">
-                  <h5>{{ article.title }}</h5>
-                  <p class="description">{{ article.description }}</p>
-                </div>
+            <div
+              v-for="(art, i) in s8.cat2.articles"
+              :key="i"
+              class="s8-cat2-item"
+            >
+              <img :src="art.image" :alt="art.title" class="s8-cat2-img" />
+              <div class="s8-cat2-text">
+                <h4 class="s8-art-title">{{ art.title }}</h4>
+                <p class="s8-art-desc">{{ art.description }}</p>
+                <p class="s8-art-author">{{ art.author }}</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="sidebar-ads">
-          <div class="ads-banner">📢 Quảng cáo bên lề</div>
+        <!-- RIGHT sidebar 320px: Ads Banner -->
+        <div class="s8-sidebar">
+          <div class="s8-ads-banner bg-cover" style="background-image: url('/image_pack/ads_side_bar.png');" aria-label="Quảng cáo"></div>
         </div>
       </section>
-    </main>
 
-    <Footer />
+    </div><!-- end page-body-light -->
+
+    <Footer @category-selected="handleCategorySelect" />
   </div>
 </template>
 
+<!-- 
+     SCRIPT
+      -->
 <script>
 import Header from '../components/Header.vue'
 import Navigation from '../components/Navigation.vue'
 import Footer from '../components/Footer.vue'
+import NewsCard from '../components/NewsCard.vue'
 
 export default {
   name: 'HomePage',
-  components: {
-    Header,
-    Navigation,
-    Footer
-  },
+  components: { Header, Navigation, Footer, NewsCard },
   data() {
     return {
-      pageTitle: 'Trang Chủ TiaSang',
-      
-      // SECTION TYPE 1
-      sectionType1: {
-        featuredArticle: {
-          title: 'Bài viết nổi bật',
-          description: 'Mô tả chi tiết về bài viết nổi bật',
-          author: 'Tác giả 1',
-          date: '12/03/2026',
-          image: '/image_pack/default.jpg'
+      // ── SECTION 1 ──────────────────────────────────────────────────────────
+      s1: {
+        featured: {
+          id: 1,
+          image: '/image_pack/image_feature_post.png',
+          title: 'Hệ sinh thái đổi mới sáng tạo đang chuyển mình mạnh mẽ',
+          description: 'Doanh nghiệp công nghệ nội đang tăng tốc đầu tư, tạo nên những sản phẩm vươn tầm khu vực và bền vững hơn.',
+          author: 'Minh Quân',
+          date: '12/03/2026'
         },
-        otherStories: [
+        stories: [
           {
-            title: 'Câu chuyện 1',
-            author: 'Tác giả A',
+            image: '/image_pack/image_post_content_list.png',
+            title: 'Nhà máy thông minh giảm 20% tiêu hao năng lượng',
+            author: 'Khánh Ly',
             date: '11/03/2026',
-            comments: 15,
-            image: '/image_pack/default.jpg'
+            comments: 24
           },
           {
-            title: 'Câu chuyện 2',
-            author: 'Tác giả B',
+            image: '/image_pack/image_post_content_list.png',
+            title: 'Start-up AI Việt gọi vốn vòng Series A thành công',
+            author: 'Bảo Châu',
             date: '10/03/2026',
-            comments: 8,
-            image: '/image_pack/default.jpg'
+            comments: 15
           }
         ],
         quote: {
-          text: 'Đây là một câu trích dẫn đặc biệt từ bài viết hoặc nhân vật nổi tiếng',
-          author: 'Người trích dẫn'
+          text: 'Đổi mới không phải là đặc quyền của số ít — đó là con đường duy nhất để cả dân tộc vươn tới thịnh vượng bền vững.',
+          author: 'GS. Nguyễn Văn An'
         }
       },
 
-      // SECTION TYPE 2
-      sectionType2: {
-        title: 'Tin nổi bật',
-        featuredArticle: {
-          title: 'Bài viết nổi bật chính',
-          author: 'Tác giả chính',
-          image: '/image_pack/default.jpg'
+      // ── SECTION 2 ──────────────────────────────────────────────────────────
+      s2: {
+        title: 'Nền tảng & Kiến tạo',
+        featured: {
+          image: '/image_pack/image_feature_post.png',
+          title: 'Chuyển đổi số nông nghiệp: từ mô hình thử nghiệm đến nhân rộng toàn quốc',
+          author: 'Lan Hương'
         },
         articleList: [
-          { title: 'Bài 1', author: 'Tác giả 1', image: '/image_pack/default.jpg' },
-          { title: 'Bài 2', author: 'Tác giả 2', image: '/image_pack/default.jpg' },
-          { title: 'Bài 3', author: 'Tác giả 3', image: '/image_pack/default.jpg' },
-          { title: 'Bài 4', author: 'Tác giả 4', image: '/image_pack/default.jpg' }
+          { title: 'Hạ tầng 5G mở rộng đến vùng ven biển', author: 'Hoàng Phúc', image: '/image_pack/image_post_content_list.png' },
+          { title: 'Phòng sạch mới cho nghiên cứu vi mạch trong nước', author: 'Tuấn Nghĩa', image: '/image_pack/image_post_content_list.png' },
+          { title: 'Trung tâm dữ liệu xanh đạt chứng nhận quốc tế đầu tiên', author: 'Mai Hương', image: '/image_pack/image_post_content_list.png' },
+          { title: 'Giải pháp an ninh mạng sử dụng học máy nội địa', author: 'Trọng Hiếu', image: '/image_pack/image_post_content_list.png' },
+          { title: 'Hợp kim siêu nhẹ mở ra ứng dụng hàng không mới', author: 'Gia Hân', image: '/image_pack/image_post_content_list.png' }
         ],
-        subContentTitle: 'Chuyên đề khác',
+        subLabel: 'Chuyên đề khác',
         categories: [
-          { name: 'Danh mục 1', image: '/image_pack/default.jpg' },
-          { name: 'Danh mục 2', image: '/image_pack/default.jpg' },
-          { name: 'Danh mục 3', image: '/image_pack/default.jpg' },
-          { name: 'Danh mục 4', image: '/image_pack/default.jpg' }
+          { name: 'Khoa học & Công nghệ', image: '/image_pack/image_post_content_list.png' },
+          { name: 'Hồ sơ & Nhân vật', image: '/image_pack/image_post_content_list.png' },
+          { name: 'Sáng tạo & Thiết kế', image: '/image_pack/image_post_content_list.png' },
+          { name: 'Kinh tế số', image: '/image_pack/image_post_content_list.png' },
+          { name: 'Giáo dục & Kỹ năng', image: '/image_pack/image_post_content_list.png' }
         ]
       },
 
-      // SECTION TYPE 3
-      sectionType3: {
-        title: 'Diễn đàn',
+      // ── SECTION 3: Diễn đàn ────────────────────────────────────────────────
+      s3: {
         mainPosts: [
           {
-            title: 'Chủ đề thảo luận 1',
-            author: 'Người dùng A',
-            date: '12/03/2026',
-            comments: 24,
-            image: '/image_pack/default.jpg'
+            image: '/image_pack/image_post_content_list.png',
+            authorAvatar: '/image_pack/image_mini_post_side_bar.png',
+            title: 'Làm thế nào để doanh nghiệp nhỏ tiếp cận công nghệ AI mà không cần ngân sách lớn?',
+            author: 'Nhật Minh',
+            comments: 42,
+            date: '12/03/2026'
           },
           {
-            title: 'Chủ đề thảo luận 2',
-            author: 'Người dùng B',
-            date: '11/03/2026',
-            comments: 15,
-            image: '/image_pack/default.jpg'
+            image: '/image_pack/image_post_content_list.png',
+            authorAvatar: '/image_pack/image_mini_post_side_bar.png',
+            title: 'Chiến lược đào tạo kỹ năng số cho thế hệ lao động mới',
+            author: 'Phương Linh',
+            comments: 28,
+            date: '11/03/2026'
+          },
+          {
+            image: '/image_pack/image_post_content_list.png',
+            authorAvatar: '/image_pack/image_mini_post_side_bar.png',
+            title: 'Open source vs. Closed source: Bài toán lớn cho hệ sinh thái công nghệ Việt',
+            author: 'Thanh Tùng',
+            comments: 37,
+            date: '10/03/2026'
           }
         ],
-        subListTitle: 'Bài viết nổi bật',
         subPosts: [
-          { title: 'Chủ đề 1', comments: 8 },
-          { title: 'Chủ đề 2', comments: 5 },
-          { title: 'Chủ đề 3', comments: 12 }
+          { title: 'Vai trò của startup trong hệ sinh thái đổi mới quốc gia', comments: 18 },
+          { title: 'Tương lai của việc làm khi AI thay thế lao động phổ thông', comments: 51 },
+          { title: 'Chính sách dữ liệu xuyên biên giới: Việt Nam đang ở đâu?', comments: 29 }
         ]
       },
 
-      // SECTION TYPE 4
-      sectionType4: {
-        title: 'Nội dung chính',
-        articles: [
+      // ── SECTION 4 ──────────────────────────────────────────────────────────
+      s4: {
+        newsList: [
           {
-            title: 'Bài viết 1',
-            description: 'Mô tả ngắn về bài viết',
-            author: 'Tác giả 1',
-            image: '/image_pack/default.jpg'
+            date: '12/03/2026', priority: 'high', category: 'Văn hóa',
+            image: 'image_pack/image_post_content_list.png',
+            title: 'Di sản văn hoá phi vật thể được số hoá và lưu trữ lâu dài',
+            text: 'Dự án số hoá quy mô lớn giúp bảo tồn hàng nghìn bài dân ca, điệu múa truyền thống đang có nguy cơ mai một.',
+            author: 'Phương Nam', priorityText: 'Văn hoá & Xã hội'
           },
           {
-            title: 'Bài viết 2',
-            description: 'Mô tả ngắn về bài viết',
-            author: 'Tác giả 2',
-            image: '/image_pack/default.jpg'
+            date: '11/03/2026', priority: 'high', category: 'Giáo dục',
+            image: 'image_pack/image_post_content_list.png',
+            title: 'Mô hình trường học thông minh lan rộng ra các tỉnh thành',
+            text: 'Công nghệ thực tế tăng cường và bảng tương tác thay đổi hoàn toàn trải nghiệm học tập.',
+            author: 'Lệ Hằng', priorityText: 'Giáo dục'
+          },
+          {
+            date: '10/03/2026', priority: 'medium', category: 'Sức khoẻ',
+            image: 'image_pack/image_post_content_list.png',
+            title: 'Ứng dụng sức khỏe cá nhân hóa đạt 1 triệu người dùng',
+            text: 'Thuật toán gợi ý dinh dưỡng và lộ trình luyện tập dựa trên hồ sơ sức khỏe cá nhân.',
+            author: 'Lan Hương', priorityText: 'Sức khoẻ'
           }
         ],
-        subTitle: 'Bài viết khác',
+        subTitle: 'Tác giả nổi bật',
         subPosts: [
           {
-            title: 'Bài viết phụ 1',
-            description: 'Mô tả',
-            author: 'Tác giả',
-            job: 'Vị trí công việc',
-            authorAvatar: '/image_pack/default.jpg'
+            title: 'Xây dựng thương hiệu cá nhân trong kỷ nguyên số',
+            description: 'Mạng xã hội, nội dung chất lượng và sự nhất quán là ba trụ cột tạo nên một thương hiệu cá nhân bền vững.',
+            author: 'TS. Nguyễn Minh Tâm',
+            job: 'Chuyên gia truyền thông số',
+            authorAvatar: '/image_pack/image_mini_post_side_bar.png'
           },
           {
-            title: 'Bài viết phụ 2',
-            description: 'Mô tả',
-            author: 'Tác giả',
-            job: 'Vị trí công việc',
-            authorAvatar: '/image_pack/default.jpg'
+            title: 'Tư duy hệ thống — chìa khóa giải quyết vấn đề phức tạp',
+            description: 'Nhìn toàn cảnh, hiểu vòng phản hồi và nhận ra điểm kích hoạt là kỹ năng không thể thiếu trong thế giới VUCA.',
+            author: 'PGS. Lê Thanh Hải',
+            job: 'Giảng viên Đại học Quốc gia',
+            authorAvatar: '/image_pack/image_mini_post_side_bar.png'
+          },
+          {
+            title: 'Kinh tế sáng tạo: Góc nhìn từ thực tiễn Đông Nam Á',
+            description: 'Các quốc gia ASEAN đang cạnh tranh quyết liệt để thu hút vốn đầu tư vào ngành công nghiệp sáng tạo.',
+            author: 'GS. Trần Văn Bình',
+            job: 'Cố vấn chính sách kinh tế',
+            authorAvatar: '/image_pack/image_mini_post_side_bar.png'
           }
         ]
       },
 
-      // SECTION TYPE 5
-      sectionType5: {
-        title: 'Chuyên mục nỗi bật',
+      // ── SECTION 5: Khoa học & Công nghệ ────────────────────────────────────
+      s5: {
+        title: 'Khoa học và Công nghệ',
         featured: {
-          title: 'Bài viết chính',
-          description: 'Mô tả chi tiết',
-          author: 'Tác giả',
-          image: '/image_pack/default.jpg'
+          image: '/image_pack/image_feature_post.png',
+          title: 'Vệ tinh quan sát Trái đất bước vào giai đoạn hiệu chuẩn cuối cùng',
+          description: 'Dữ liệu hình ảnh độ phân giải cao từ vệ tinh sẽ hỗ trợ dự báo thiên tai, quản lý tài nguyên biển và giám sát nông nghiệp.',
+          author: 'Lệ Hằng'
         },
         others: [
-          { title: 'Bài viết khác 1', author: 'Tác giả A', image: '/image_pack/default.jpg' },
-          { title: 'Bài viết khác 2', author: 'Tác giả B', image: '/image_pack/default.jpg' }
+          {
+            image: '/image_pack/image_post_content_list.png',
+            title: 'Nông nghiệp chính xác giảm 25% lượng nước tưới nhờ cảm biến IoT',
+            author: 'Gia Hân'
+          },
+          {
+            image: '/image_pack/image_post_content_list.png',
+            title: 'Thiết bị đo chất lượng không khí cầm tay đầu tiên sản xuất nội địa',
+            author: 'Minh Phát'
+          }
         ]
       },
 
-      // SECTION TYPE 6
-      sectionType6: {
-        title: 'Tin tức mới nhất',
+      // ── SECTION 6 ──────────────────────────────────────────────────────────
+      s6: {
+        title: 'Sáng tạo & Thiết kế',
         articles: [
-          { title: 'Tin 1', author: 'Tác giả 1', image: '/image_pack/default.jpg' },
-          { title: 'Tin 2', author: 'Tác giả 2', image: '/image_pack/default.jpg' },
-          { title: 'Tin 3', author: 'Tác giả 3', image: '/image_pack/default.jpg' }
+          {
+            image: '/image_pack/image_post_content_list.png',
+            title: 'Kiến trúc xanh — xu hướng thiết kế bền vững dẫn dắt thập kỷ mới',
+            author: 'Hoàng Dung'
+          },
+          {
+            image: '/image_pack/image_post_content_list.png',
+            title: 'Đồ hoạ sinh thành AI: ranh giới mới giữa sáng tạo và bản quyền',
+            author: 'Trà My'
+          },
+          {
+            image: '/image_pack/image_post_content_list.png',
+            title: 'Thiết kế bao bì tái chế: từ ý tưởng đến thực tiễn sản xuất',
+            author: 'Quốc Bảo'
+          }
         ]
       },
 
-      // SECTION TYPE 7
-      sectionType7: {
+      // ── SECTION 7 ──────────────────────────────────────────────────────────
+      s7: {
         title: 'Thư viện ảnh',
         articles: [
-          { title: 'Ảnh 1', image: '/image_pack/default.jpg' },
-          { title: 'Ảnh 2', image: '/image_pack/default.jpg' },
-          { title: 'Ảnh 3', image: '/image_pack/default.jpg' },
-          { title: 'Ảnh 4', image: '/image_pack/default.jpg' }
+          { image: '/image_pack/image_post_content_list.png', title: 'Lễ hội ánh sáng thành phố 2026' },
+          { image: '/image_pack/image_post_content_list.png', title: 'Triển lãm công nghệ quốc tế Hà Nội' },
+          { image: '/image_pack/image_post_content_list.png', title: 'Không gian sáng tạo làng nghề truyền thống' },
+          { image: '/image_pack/image_post_content_list.png', title: 'Hành trình khởi nghiệp từ vùng nông thôn' }
         ]
       },
 
-      // SECTION TYPE 8
-      sectionType8: {
-        category1: {
-          name: 'Danh mục 1',
-          articles: [
-            { title: 'Bài 1', author: 'Tác giả 1', image: '/image_pack/default.jpg' },
-            { title: 'Bài 2', author: 'Tác giả 2', image: '/image_pack/default.jpg' }
-          ]
-        },
-        category2: {
-          name: 'Danh mục 2',
+      // ── SECTION 8 ──────────────────────────────────────────────────────────
+      s8: {
+        cat1: {
+          name: 'Hồ sơ và Nhân vật',
           articles: [
             {
-              title: 'Bài viết',
-              description: 'Mô tả ngắn',
-              image: '/image_pack/default.jpg'
+              image: '/image_pack/image_post_content_list.png',
+              title: 'Người kỹ sư trẻ biến giấc mơ chip nội địa thành hiện thực',
+              author: 'Phương Linh'
+            },
+            {
+              image: '/image_pack/image_post_content_list.png',
+              title: 'Nhà sáng lập startup xanh chinh phục thị trường ASEAN',
+              author: 'Thanh Bình'
+            }
+          ]
+        },
+        cat2: {
+          name: 'Kinh tế số',
+          articles: [
+            {
+              image: '/image_pack/image_post_content_list.png',
+              title: 'Fintech Việt Nam bứt phá: Từ ví điện tử đến ngân hàng số toàn diện',
+              description: 'Cuộc đua số hoá dịch vụ tài chính đang tái định hình cách người dân Việt tiếp cận tín dụng, thanh toán và đầu tư.',
+              author: 'Văn Khoa'
             }
           ]
         }
@@ -514,1047 +592,1472 @@ export default {
     }
   },
   methods: {
-    handleSearch(query) {
-      console.log('Tìm kiếm:', query)
-    },
-    handleSearchInput(e) {
-      console.log('Input:', e.target.value)
-    },
-    handleLogin() {
-      console.log('Đăng nhập')
-    },
+    handleSearch() {},
+    handleLogin() {},
     handleCategorySelect(category) {
-      console.log('Danh mục được chọn:', category)
-      
-      // Map category names to routes
-      const categoryRoutes = {
-        'Nền tảng & Kiến tạo': '/category/nen-tang-kien-tao'
+      const routes = {
+        'Nền tảng & Kiến tạo': '/category/nen-tang-kien-tao',
+        'Diễn đàn': '/forum'
       }
-      
-      if (categoryRoutes[category]) {
-        this.$router.push(categoryRoutes[category])
-      }
+      if (routes[category]) this.$router.push(routes[category])
     }
   }
 }
 </script>
 
+<!-- 
+     STYLES
+      -->
 <style scoped>
+
+/* ── Page layout ─────────────────────────────────────────────────────────── */
 .page-body {
+  width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 30px 20px;
+  padding: 40px 20px;
 }
 
-.divider {
-  height: 1px;
-  background-color: #ddd;
-  margin: 40px 0;
+.page-body-light {
+  background: #fff;
 }
 
-/* SECTION TYPE 1 */
-.section-type-1 {
-  display: grid;
-  grid-template-columns: 720px 1fr;
-  grid-template-rows: auto auto;
-  gap: 30px;
+.page-divider {
   width: 100%;
   max-width: 1100px;
+  height: 1px;
+  background: #D6D6D6;
+  margin: 30px auto;
 }
 
-.featured-article-large {
+/* ── DÙNG CHUNG: section header (tiêu đề trái + xem thêm phải) ───────────── */
+.s2-header,
+.s4-sub-header,
+.s5-header,
+.s6-header,
+.s7-header,
+.s8-cat-header {
   display: flex;
   width: 100%;
-  height: 720px;
-  aspect-ratio: 1/1;
-  background-color: #f0f0f0;
-  border-radius: 8px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* ── DÙNG CHUNG: tiêu đề chuyên mục nền trắng (vàng đậm) ────────────────── */
+.s4-sub-title,
+.s5-section-title,
+.s6-section-title,
+.s7-section-title,
+.s8-cat-title {
+  color: #AD7701;
+  font-family: Merriweather, serif;
+  font-size: clamp(18px, 4vw, 22px);
+  font-weight: 700;
+  line-height: 160%;
+  margin: 0;
+}
+
+/* ── DÙNG CHUNG: link "Xem thêm" màu tối ────────────────────────────────── */
+.s4-sub-readmore,
+.s5-readmore,
+.s8-cat-readmore {
+  color: #101010;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 400;
+  line-height: 160%;
+  text-decoration: none;
+}
+
+/* ── DÙNG CHUNG: tiêu đề bài nhỏ 18px, 2 dòng ───────────────────────────── */
+.s5-other-title,
+.s6-article-title {
+  color: #101010;
+  font-family: Merriweather, serif;
+  font-size: clamp(16px, 3.5vw, 18px);
+  font-weight: 700;
+  line-height: 160%;
+  margin: 0;
   overflow: hidden;
-  position: relative;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* ── DÙNG CHUNG: tên tác giả bài nhỏ ────────────────────────────────────── */
+.s5-other-author,
+.s6-article-author,
+.s8-art-author {
+  color: #5F5F5F;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 400;
+  line-height: 140%;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ── SECTION TYPE 1 ──────────────────────────────────────────────────────── */
+
+.section-type-1 {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  column-gap: 35px;
+  row-gap: 30px;
+  width: 100%;
+  padding-bottom: 15px;
+}
+
+/* Featured Article Large — spans rows 1+2 on left */
+.s1-featured {
+  grid-column: 1;
   grid-row: 1 / 3;
+  position: relative;
+  overflow: hidden;
 }
 
-.featured-article-large img {
-  width: 720px;
-  height: 720px;
+.s1-featured-img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
-  aspect-ratio: 1/1;
+  display: block;
 }
 
-.featured-article-large .article-text {
+.s1-featured-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(transparent, rgba(0,0,0,0.8));
-  color: white;
-  padding: 20px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.85));
+  padding: 24px 20px 20px;
+  color: #fff;
 }
 
-.article-title {
+.s1-featured-title {
   font-family: Merriweather, serif;
-  font-size: 24px;
+  font-size: clamp(20px, 4.5vw, 26px);
   font-weight: 700;
-  margin: 0 0 10px 0;
-  line-height: 1.6;
+  line-height: 160%;
+  margin: 0 0 8px;
+  color: #fff;
 }
 
-.article-description {
-  font-size: 14px;
-  margin: 0 0 10px 0;
-  line-height: 1.6;
+.s1-featured-desc {
+  font-family: Archivo, sans-serif;
+  font-size: clamp(14px, 3.5vw, 17px);
+  font-weight: 400;
+  line-height: 160%;
+  margin: 0 0 10px;
+  color: #fff;
 }
 
-.article-meta {
+.s1-featured-meta {
   display: flex;
   gap: 15px;
-  font-size: 12px;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(12px, 3vw, 14px);
+  color: rgba(255,255,255,0.85);
 }
 
-.other-stories {
+/* 2 Other Stories — chia đều không gian còn lại bên phải featured */
+.s1-stories {
+  grid-column: 2;
+  grid-row: 1 / 3;
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  width: 100%;
+  gap: 20px;
+  align-self: stretch;
 }
 
-.story-unit {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 300px;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid #ddd;
-}
-
-.story-image {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-
-.story-text {
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.s1-story-unit {
   flex: 1;
-}
-
-.story-title {
-  font-family: Merriweather, serif;
-  font-size: 16px;
-  font-weight: 700;
-  margin: 0;
-  line-height: 1.6;
-}
-
-.story-author,
-.story-date,
-.comment-count {
-  font-size: 12px;
-  color: #666;
-}
-
-.feature-quote {
   display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.s1-story-img {
+  flex: 1;
   width: 100%;
-  height: auto;
-  gap: 30px;
-  align-items: center;
-  padding: 40px 0;
-  background-color: transparent;
-  border-radius: 0;
-  grid-column: 1 / 3;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  min-height: 0;
 }
 
-.quote-icon {
-  width: 163px;
-  height: 163px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 1/1;
-  font-size: 100px;
-  color: #F4C660;
+.s1-story-info {
+  padding: 10px 0 0;
   flex-shrink: 0;
 }
 
-.quote-content {
-  flex: 1;
-}
-
-.quote-text {
+.s1-story-title {
   font-family: Merriweather, serif;
-  font-size: 18px;
+  font-size: clamp(15px, 3.5vw, 18px);
+  font-weight: 700;
+  line-height: 160%;
+  color: #101010;
+  margin: 0 0 8px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.s1-story-meta {
+  display: flex;
+  gap: 12px;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(12px, 3vw, 14px);
+  color: #7F7F7F;
+  align-items: center;
+}
+
+/* Feature Quote — spans both columns */
+.s1-quote {
+  grid-column: 1 / 3;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 20px;
+}
+
+.s1-quote-icon {
+  width: 163px;
+  height: 163px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.s1-quote-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.s1-quote-text {
+  font-family: Merriweather, serif;
+  font-size: clamp(18px, 4.5vw, 21px);
   font-style: italic;
-  margin: 0 0 10px 0;
-  line-height: 1.6;
+  font-weight: 700;
+  line-height: 160%;
+  color: #101010;
+  margin: 0 0 8px;
 }
 
-.quote-author {
-  margin: 0 0 10px 0;
-  font-weight: 600;
+.s1-quote-author {
+  font-family: Archivo, sans-serif;
+  font-size: clamp(14px, 3.5vw, 16px);
+  font-weight: 400;
+  color: #5F5F5F;
+  margin: 0 0 6px;
 }
 
-.quote-nav {
-  color: var(--3, #F4C660);
+.s1-quote-nav {
+  color: #F4C660;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(14px, 3.5vw, 16px);
+  font-weight: 400;
   text-decoration: none;
-  font-size: 14px;
 }
 
-/* SECTION TYPE 2 */
+/* ── SECTION TYPE 2: màu tím than (full-width) ───────────────────────────── */
+
+.s2-outer {
+  width: 100%;
+  background: #1A1040;
+  padding: 40px 0;
+}
+
+.s2-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 .section-type-2 {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding-bottom: 15px;
 }
 
-.section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.section-title {
-  color: var(--3, #F4C660);
+.s2-section-title {
+  color: #F4C660;
   font-family: Merriweather, serif;
-  font-size: 22px;
-  font-style: normal;
+  font-size: clamp(18px, 4vw, 22px);
   font-weight: 700;
-  margin: 0;
   line-height: 160%;
+  margin: 0;
 }
 
-.search-bar {
+.s2-readmore {
+  color: #fff;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 400;
+  line-height: 160%;
+  text-decoration: none;
+}
+
+.s2-search-bar {
   display: flex;
-  width: 1100px;
+  width: 100%;
   height: 24px;
   align-items: center;
   gap: 10px;
-  border: 1px solid #ddd;
-  padding: 0;
-  border-radius: 4px;
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+  padding-bottom: 4px;
 }
 
-.search-input {
+.s2-search-input {
   flex: 1;
+  background: transparent;
   border: none;
   outline: none;
-  font-size: 14px;
+  color: #fff;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(13px, 3vw, 15px);
+  line-height: 160%;
 }
 
-.search-btn {
+.s2-search-input::placeholder {
+  color: rgba(255,255,255,0.45);
+}
+
+.s2-search-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 16px;
-}
-
-.read-more {
-  color: #fff;
-  text-decoration: none;
-  font-family: Archivo, sans-serif;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 160%;
-}
-
-.main-content {
-  display: flex;
-  gap: 30px;
-  align-items: stretch;
-}
-
-.featured-item {
-  width: 670px;
-  height: 461px;
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.featured-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.featured-text {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(0,0,0,0.8));
-  color: white;
-  padding: 20px;
-}
-
-.featured-text h3 {
-  margin: 0 0 10px 0;
-  font-family: Merriweather, serif;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.featured-author {
-  margin: 0;
-  font-size: 14px;
-}
-
-.article-scroll-list {
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  height: 83px;
-  gap: 20px;
-  overflow-y: auto;
-}
-
-.article-item {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-}
-
-.article-info {
-  flex: 1;
-}
-
-.article-info .article-title {
-  font-family: Merriweather, serif;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 700;
-  margin: 0 0 5px 0;
-  line-height: 160%;
-  color: #fff;
-  height: 57px;
-  align-self: stretch;
-  overflow: hidden;
-}
-
-.article-author {
-  margin: 0;
-  width: 260px;
-  height: 20px;
-  font-family: Merriweather, serif;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 160%;
-  color: #fff;
-}
-
-.article-thumb {
-  width: 120px;
-  height: 72px;
-  flex-shrink: 0;
-  aspect-ratio: 5/3;
-  object-fit: cover;
-  border-radius: 4px;
-}
-
-.sub-content {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.sub-title {
-  font-family: Merriweather, serif;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 700;
-  margin: 0;
-  color: #fff;
-  line-height: 160%;
-}
-
-.category-carousel {
-  display: flex;
-  width: 1100px;
-  height: 168px;
-  gap: 30px;
-  align-items: center;
-  overflow-x: auto;
-}
-
-.category-item {
-  width: 280px;
-  height: 168px;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
+  width: 24px;
+  height: 24px;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.category-item img {
+.s2-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+/* Featured LEFT */
+.s2-featured {
+  flex: 1;
+  min-height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Scroll wrapper phải — chứa scroll list + fade */
+.s2-scroll-wrapper {
+  position: relative;
+  width: 400px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.s2-scroll-wrapper::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, #1A1040);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Scroll List RIGHT */
+.s2-scroll-list {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 461px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  flex-shrink: 0;
+}
+
+.s2-scroll-list::-webkit-scrollbar {
+  display: none;
+}
+
+.s2-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.s2-item-text {
+  flex: 1;
+  overflow: hidden;
+}
+
+.s2-item-title {
+  color: #fff;
+  font-family: Merriweather, serif;
+  font-size: clamp(16px, 4vw, 18px);
+  font-weight: 700;
+  line-height: 160%;
+  margin: 0 0 4px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.s2-item-author {
+  color: #fff;
+  font-family: Merriweather, serif;
+  font-size: clamp(12px, 3vw, 14px);
+  font-weight: 700;
+  line-height: 160%;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.s2-item-thumb {
+  width: 120px;
+  height: 72px;
+  flex-shrink: 0;
+  object-fit: cover;
+  aspect-ratio: 5 / 3;
+}
+
+.s2-featured-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-.category-name {
+.s2-featured-overlay {
   position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.85));
+  padding: 24px 20px 18px;
+}
+
+.s2-featured-title {
+  font-family: Merriweather, serif;
+  font-size: clamp(18px, 4vw, 22px);
+  font-weight: 700;
+  line-height: 160%;
+  color: #fff;
+  margin: 0 0 8px;
+}
+
+.s2-featured-author {
+  font-family: Archivo, sans-serif;
+  font-size: clamp(13px, 3vw, 15px);
+  color: rgba(255,255,255,0.85);
+  margin: 0;
+}
+
+/* Sub Content */
+.s2-sub {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.s2-sub-label {
+  color: #fff;
+  font-family: Merriweather, serif;
+  font-size: clamp(14px, 3.5vw, 16px);
+  font-weight: 700;
+  margin: 0;
+  line-height: 160%;
+}
+
+.s2-carousel {
+  display: flex;
+  width: 100%;
+  height: 168px;
+  align-items: center;
+  gap: 30px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.s2-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.s2-cat-item {
+  width: 280px;
+  height: 168px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.s2-cat-img {
+  width: 280px;
+  height: 168px;
+  object-fit: cover;
+  display: block;
+}
+
+.s2-cat-name {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.35);
   color: #fff;
   text-align: center;
   font-family: Merriweather, serif;
-  font-size: 16px;
-  font-style: normal;
+  font-size: clamp(14px, 3.5vw, 16px);
   font-weight: 700;
   line-height: 160%;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  padding: 8px;
 }
 
-/* SECTION TYPE 3 */
+/* ── SECTION TYPE 3: Forum ───────────────────────────────────────────────── */
+
 .section-type-3 {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: 35px;
+  padding-bottom: 15px;
+}
+
+/* Main list – chiếm phần lớn chiều rộng */
+.s3-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.s3-main-label {
+  font-family: Merriweather, serif;
+  font-size: clamp(18px, 4vw, 22px);
+  font-weight: 700;
+  line-height: 160%;
+  color: #101010;
+  margin: 0;
+}
+
+.s3-forum-item {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.s3-post-img {
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+}
+
+.s3-post-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.s3-post-title {
+  color: #101010;
+  font-family: Merriweather, serif;
+  font-size: clamp(18px, 4vw, 22px);
+  font-weight: 700;
+  line-height: 160%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin: 0 0 10px;
+}
+
+.s3-post-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 24px;
+}
+
+.s3-avatar {
+  width: 12px;
+  height: 16px;
+  object-fit: cover;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.s3-author-text,
+.s3-meta-sep {
+  color: #222;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 400;
+  line-height: 140%;
+}
+
+.s3-date {
+  color: #7F7F7F;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 400;
+  line-height: 100%;
+}
+
+/* Sub list */
+.s3-sub {
+  width: 345px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.forum-container {
-  display: flex;
-  gap: 30px;
+.s3-sub-title {
+  color: #101010;
+  font-family: Merriweather, serif;
+  font-size: clamp(18px, 4vw, 22px);
+  font-weight: 700;
+  line-height: 160%;
+  margin: 0;
 }
 
-.forum-main-list,
-.forum-sub-list {
-  flex: 1;
+.s3-sub-item {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 4px;
 }
 
-.list-title {
+.s3-sub-post-title {
+  color: #101010;
+  font-family: Merriweather, serif;
+  font-size: clamp(16px, 4vw, 18px);
   font-weight: 700;
+  line-height: 160%;
   margin: 0;
-  color: #fff;
-  font-size: 16px;
 }
 
-.forum-item {
+.s3-sub-comments {
+  color: #7F7F7F;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 400;
+  margin: 0;
   display: flex;
-  gap: 15px;
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 8px;
-}
-
-.post-image {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 4px;
-  flex-shrink: 0;
-}
-
-.post-info {
-  flex: 1;
-}
-
-.post-info h4 {
-  margin: 0 0 10px 0;
-  color: #fff;
-}
-
-.post-meta {
-  display: flex;
-  gap: 15px;
-  font-size: 12px;
-  color: #ddd;
-}
-
-.sub-post-item {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
 }
 
-.sub-post-item h5 {
-  margin: 0;
-  color: #fff;
-}
-
-.sub-post-item .comments {
-  margin: 0;
-  color: #ddd;
-  font-size: 12px;
-}
-
-.btn-create-post {
-  background-color: var(--3, #F4C660);
-  color: #000;
+.s3-btn-create {
+  background: var(--3, #F4C660);
+  color: #101010;
   border: none;
   padding: 10px 20px;
-  border-radius: 4px;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 700;
   cursor: pointer;
-  font-weight: 600;
-  margin-top: 10px;
+  border-radius: 4px;
   width: 100%;
+  text-align: center;
 }
 
-/* SECTION TYPE 4 */
+/* ── SECTION TYPE 4 ──────────────────────────────────────────────────────── */
+
 .section-type-4 {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding-bottom: 15px;
 }
 
-.content-layout {
+.s4-layout {
   display: flex;
-  gap: 30px;
+  align-items: stretch;
+  gap: 35px;
 }
 
-.main-articles {
-  flex: 2;
+/* Main List – fluid */
+.s4-main-list {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sub content */
+.s4-sub {
+  width: 345px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.article-card {
-  display: flex;
-  gap: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.article-card img {
-  width: 200px;
-  height: 150px;
-  object-fit: cover;
-}
-
-.card-info {
-  flex: 1;
-  padding: 15px;
+.s4-sub-post {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 
-.card-info h4 {
-  margin: 0;
-  color: #fff;
+.s4-sub-divider {
+  height: 1px;
+  background: #D6D6D6;
+  width: 100%;
+}
+
+.s4-sub-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.s4-sub-texts {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.s4-sub-post-title {
+  color: #101010;
   font-family: Merriweather, serif;
-  font-size: 18px;
+  font-size: clamp(16px, 4vw, 18px);
   font-weight: 700;
-}
-
-.card-info .description {
+  line-height: 160%;
   margin: 0;
-  color: #ddd;
-  font-size: 14px;
-  line-height: 1.6;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
-.card-info .author {
+.s4-sub-post-desc {
+  color: #5F5F5F;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 400;
+  line-height: 160%;
   margin: 0;
-  color: #F4C660;
-  font-size: 13px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
-.sub-section {
-  flex: 1;
+.s4-sub-author {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.s4-author-avatar {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 48px;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+}
+
+.s4-author-info {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 2px;
+  justify-content: center;
 }
 
-.sub-section .sub-title {
-  margin: 0;
+.s4-author-name {
+  color: #101010;
+  font-family: Merriweather, serif;
+  font-size: clamp(14px, 3.5vw, 16px);
   font-weight: 700;
-  color: #fff;
+  line-height: 160%;
+  margin: 0;
 }
 
-.read-more-btn {
-  background-color: var(--3, #F4C660);
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  text-decoration: none;
-  text-align: center;
+.s4-author-job {
+  color: #5F5F5F;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 400;
+  line-height: 140%;
+  margin: 0;
 }
 
-.sub-post {
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 8px;
-}
-
-.sub-post h5 {
-  margin: 0 0 10px 0;
-  color: #fff;
-}
-
-.sub-post .description {
-  margin: 0 0 15px 0;
-  color: #ddd;
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.author-info {
+/* Ads Banner */
+.s4-ads-wrap {
   display: flex;
-  gap: 10px;
-  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
-.author-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
+.s4-ads-banner {
+  width: 100%;
+  max-width: 970px;
+  height: 223px;
+  background: #e8e8e8;
 }
 
-.author-name {
-  margin: 0;
-  color: #fff;
-  font-weight: 600;
-  font-size: 13px;
-}
+/* ── SECTION TYPE 5 ──────────────────────────────────────────────────────── */
 
-.author-job {
-  margin: 0;
-  color: #ddd;
-  font-size: 12px;
-}
-
-.ads-banner {
-  background-color: #ddd;
-  padding: 30px;
-  text-align: center;
-  border-radius: 8px;
-  color: #000;
-  font-weight: 600;
-}
-
-/* SECTION TYPE 5 */
 .section-type-5 {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
+  padding-bottom: 15px;
 }
 
-.featured-article {
+.s5-content {
   display: flex;
-  gap: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
+  width: 100%;
+  align-items: flex-start;
+  gap: 30px;
 }
 
-.featured-article img {
-  width: 400px;
-  height: 300px;
-  object-fit: cover;
-}
-
-.featured-info {
+/* Featured LEFT – fluid */
+.s5-featured {
   flex: 1;
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
+  min-width: 0;
 }
 
-.featured-info h3 {
-  margin: 0;
-  color: #fff;
-  font-family: Merriweather, serif;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.featured-info p:not(.author) {
-  margin: 0;
-  color: #ddd;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.featured-info .author {
-  margin: 0;
-  color: #F4C660;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.others-articles {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.other-article {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.other-article img {
+.s5-featured-img {
   width: 100%;
-  height: 200px;
+  aspect-ratio: 5 / 3;
   object-fit: cover;
+  display: block;
 }
 
-.other-article h4 {
-  margin: 10px;
-  color: #fff;
+.s5-featured-title {
+  color: #101010;
   font-family: Merriweather, serif;
-  font-size: 16px;
+  font-size: clamp(18px, 4vw, 22px);
   font-weight: 700;
+  line-height: 160%;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-.other-article .author {
-  margin: 0 10px 10px 10px;
-  color: #ddd;
-  font-size: 12px;
+.s5-featured-desc {
+  color: #5F5F5F;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 400;
+  line-height: 140%;
+  margin: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
-/* SECTION TYPE 6 */
+.s5-featured-author {
+  color: #5F5F5F;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 400;
+  line-height: 140%;
+  margin: 0;
+}
+
+/* 2 Others stacked RIGHT */
+.s5-others {
+  width: 345px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.s5-other-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.s5-other-img {
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.s5-other-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ── SECTION TYPE 6 ──────────────────────────────────────────────────────── */
+
 .section-type-6 {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.article-list {
-  display: flex;
+  width: 100%;
   flex-direction: column;
   gap: 15px;
 }
 
-.list-item {
+.s6-readmore {
+  color: #0590DE;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 400;
+  line-height: 160%;
+  text-decoration: none;
+}
+
+.s6-article-list {
   display: flex;
-  gap: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  padding: 10px;
+  width: 100%;
+  gap: 30px;
+  align-items: flex-start;
 }
 
-.list-item img {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 4px;
-  flex-shrink: 0;
-}
-
-.item-info {
+.s6-article-item {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 15px;
+  min-width: 0;
 }
 
-.item-info h4 {
-  margin: 0;
-  color: #fff;
-  font-family: Merriweather, serif;
-  font-size: 16px;
-  font-weight: 700;
+.s6-article-img {
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  object-fit: cover;
+  display: block;
 }
 
-.item-info .author {
-  margin: 0;
-  color: #ddd;
-  font-size: 12px;
+.s6-article-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-/* SECTION TYPE 7 */
+/* ── SECTION TYPE 7 ──────────────────────────────────────────────────────── */
+
 .section-type-7 {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
+  width: 100%;
 }
 
-.section-type-7 .section-header {
+.s7-nav-btns {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  gap: 8px;
 }
 
-.nav-button {
-  background-color: var(--3, #F4C660);
-  color: #000;
-  width: 40px;
-  height: 40px;
+.s7-nav-btn {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid #D6D6D6;
+  background: #fff;
   border-radius: 50%;
+  font-size: clamp(18px, 4vw, 20px);
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 20px;
+  color: #101010;
+  line-height: 1;
 }
 
-.article-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+.s7-nav-btn:hover {
+  background: #f0f0f0;
+}
+
+.s7-article-list {
+  display: flex;
   gap: 20px;
-}
-
-.grid-item {
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-}
-
-.grid-item img {
+  overflow-x: auto;
+  scrollbar-width: none;
   width: 100%;
-  height: 200px;
-  object-fit: cover;
 }
 
-.grid-item h5 {
+.s7-article-list::-webkit-scrollbar {
+  display: none;
+}
+
+.s7-article-item {
+  position: relative;
+  overflow: hidden;
+  width: 250px;
+  height: 269px;
+  flex-shrink: 0;
+}
+
+.s7-article-img {
+  width: 250px;
+  height: 269px;
+  object-fit: cover;
+  display: block;
+}
+
+.s7-title-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(transparent, rgba(0,0,0,0.8));
-  color: white;
-  margin: 0;
-  padding: 15px 10px;
-  font-size: 14px;
-  font-weight: 600;
+  background: linear-gradient(transparent, rgba(0,0,0,0.82));
+  padding: 20px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
 }
 
-/* SECTION TYPE 8 */
+.s7-title-overlay span {
+  color: #fff;
+  font-family: Merriweather, serif;
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 700;
+  line-height: 160%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── SECTION TYPE 8 ──────────────────────────────────────────────────────── */
+
 .section-type-8 {
   display: flex;
-  gap: 30px;
-}
-
-.categories-section {
-  flex: 3;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.category-block {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.category-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.category-header h3 {
-  margin: 0;
-  color: var(--3, #F4C660);
-  font-family: Merriweather, serif;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.category-header .read-more {
-  color: #fff;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.category-articles {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.category-article {
-  display: flex;
-  gap: 15px;
-  border-bottom: 1px solid #ddd;
+  width: 100%;
+  align-items: flex-start;
+  gap: 60px;
   padding-bottom: 15px;
 }
 
-.category-article:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.category-article img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 4px;
-  flex-shrink: 0;
-}
-
-.category-article .article-info h5 {
-  margin: 0 0 5px 0;
-  color: #fff;
-  font-family: Merriweather, serif;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.category-article .article-info .author {
-  margin: 0;
-  color: #ddd;
-  font-size: 12px;
-}
-
-.category-article .article-info .description {
-  margin: 0;
-  color: #ddd;
-  font-size: 12px;
-  line-height: 1.6;
-}
-
-.sidebar-ads {
+/* Left column – fluid */
+.s8-left {
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: 30px;
+  min-width: 0;
+}
+
+.s8-cat-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Category 1: 2 articles side by side */
+.s8-cat1-articles {
+  display: flex;
+  width: 100%;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.s8-cat1-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.s8-cat1-img {
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.s8-cat1-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Category 2: 1 horizontal article */
+.s8-cat2-item {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
   gap: 20px;
 }
 
-.sidebar-ads .ads-banner {
-  min-height: 400px;
-  background-color: #ddd;
-  border-radius: 8px;
+.s8-cat2-img {
+  width: 47%;
+  flex-shrink: 0;
+  object-fit: cover;
+  aspect-ratio: 5 / 3;
+  display: block;
+}
+
+.s8-cat2-text {
+  flex: 1;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+  align-self: stretch;
   justify-content: center;
-  color: #000;
-  font-weight: 600;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
+/* Shared article text */
+.s8-art-title {
+  color: #101010;
+  font-family: Merriweather, serif;
+  font-size: clamp(16px, 4vw, 18px);
+  font-weight: 700;
+  line-height: 160%;
+  margin: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.s8-art-desc {
+  color: #5F5F5F;
+  font-family: Archivo, sans-serif;
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: 400;
+  line-height: 160%;
+  margin: 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+/* Right Sidebar */
+.s8-sidebar {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.s8-ads-banner {
+  width: 100%;
+  min-height: 450px;
+  background: #e8e8e8;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE  –  cùng breakpoint với NenTangKienTaoPage / styles.css
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Desktop nhỏ / tablet lớn (≤ 1200px) ────────────────────────────────── */
+@media (max-width: 1200px) {
+  .s2-scroll-wrapper { width: 320px; }
+  .s4-ads-banner  { height: auto; aspect-ratio: 970 / 223; }
+}
+
+/* ── Tablet (≤ 960px) ────────────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .page-body { 
+    padding: 30px 16px; 
+    max-width: 100%;
+  }
+
+  .page-divider { 
+    margin: 25px auto; 
+    max-width: calc(100% - 2rem);
+  }
+
+  /* Section 1 */
   .section-type-1 {
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .s1-featured { grid-column: unset; grid-row: unset; }
+  .s1-stories { 
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    gap: 20px; 
+    align-self: auto; 
+  }
+  .s1-story-unit { flex: 1 1 260px; min-height: unset; }
+  .s1-story-img { flex: unset; min-height: unset; aspect-ratio: 5 / 3; }
+  .s1-featured-title { 
+    font-size: clamp(20px, 4.5vw, 24px); 
+    line-height: 140%;
+  }
+  .s1-quote { gap: 12px; }
+  .s1-quote-icon { width: 80px; height: 80px; }
+  .s1-quote-text { 
+    font-size: clamp(16px, 4vw, 18px); 
+    line-height: 150%;
   }
 
-  .featured-article-large {
-    height: 400px;
-    aspect-ratio: auto;
+  /* Section 2 */
+  .s2-main { flex-direction: column; }
+  .s2-scroll-wrapper { width: 100%; }
+  .s2-scroll-list { max-height: min(60vh, 461px); overflow-y: auto; }
+  .s2-featured { width: 100%; }
+  .s2-section-title { 
+    font-size: clamp(18px, 4.5vw, 21px); 
   }
 
-  .story-unit {
-    height: auto;
+  /* Section 3 */
+  .section-type-3 { flex-direction: column; }
+  .s3-sub { width: 100%; flex-direction: row; flex-wrap: wrap; }
+  .s3-sub-item { flex: 1 1 220px; }
+  .s3-post-title { 
+    font-size: clamp(17px, 4.5vw, 20px); 
+    line-height: 150%;
   }
 
-  .story-image {
-    height: 150px;
+  /* Section 4 */
+  .s4-layout { flex-direction: column; }
+  .s4-sub { width: 100%; flex-direction: row; flex-wrap: wrap; gap: 24px; }
+  .s4-sub-post { flex: 1 1 240px; }
+  .s4-sub-title { 
+    font-size: clamp(17px, 4.5vw, 20px); 
   }
 
-  .quote-icon {
-    width: 100px;
-    height: 100px;
-    font-size: 80px;
+  /* Section 5 */
+  .s5-content { flex-direction: column; }
+  .s5-others { width: 100%; flex-direction: row; gap: 20px; }
+  .s5-other-item { flex: 1 1 240px; }
+  .s5-section-title { 
+    font-size: clamp(17px, 4.5vw, 20px); 
   }
+
+  /* Section 6 */
+  .s6-article-list { flex-wrap: wrap; }
+  .s6-article-item { flex: 1 1 calc(50% - 20px); }
+  .s6-section-title { 
+    font-size: clamp(17px, 4.5vw, 20px); 
+  }
+
+  /* Section 7 */
+  .s7-section-title { 
+    font-size: clamp(17px, 4.5vw, 20px); 
+  }
+
+  /* Section 8 */
+  .s8-cat-title { 
+    font-size: clamp(17px, 4.5vw, 20px); 
+  }
+  .section-type-8 { flex-direction: column; gap: 30px; }
+  .s8-left { width: 100%; }
+  .s8-sidebar { width: 100%; }
+  .s8-ads-banner { min-height: 300px; }
 }
 
+/* ── Mobile landscape (≤ 768px) ──────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .section-type-1 {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
+  .page-body { 
+    padding: 24px 16px; 
+    max-width: 100%;
   }
 
-  .featured-article-large {
-    grid-row: auto;
-    height: 300px;
-    aspect-ratio: auto;
+  .page-divider { 
+    margin: 20px auto; 
+    max-width: calc(100% - 2rem);
   }
 
-  .featured-article-large img {
-    width: 100%;
-    height: 100%;
+  /* Section 1 */
+  .s1-stories { flex-direction: column; align-self: auto; gap: 20px; }
+  .s1-story-unit { flex: unset; min-height: unset; width: 100%; }
+  .s1-story-img { flex: unset; min-height: unset; aspect-ratio: 5 / 3; }
+  .s1-featured-title { 
+    font-size: clamp(18px, 4.5vw, 22px); 
+    line-height: 140%;
+  }
+  .s1-featured-desc { 
+    font-size: clamp(13px, 3vw, 15px); 
+  }
+  .s1-story-title { 
+    font-size: clamp(15px, 3.5vw, 17px); 
+  }
+  .s1-quote { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .s1-quote-icon { width: 60px; height: 60px; }
+  .s1-quote-text { 
+    font-size: clamp(14px, 3vw, 16px); 
+    line-height: 150%;
   }
 
-  .other-stories {
-    flex-direction: column;
-    grid-column: auto;
+  /* Section 2 */
+  .s2-featured { min-height: 220px; }
+  .s2-section-title { 
+    font-size: clamp(18px, 4.5vw, 21px); 
+  }
+  .s2-featured-title { 
+    font-size: clamp(15px, 4vw, 18px); 
   }
 
-  .story-unit {
-    width: 100%;
+  /* Section 3 */
+  .section-type-3 { flex-direction: column; }
+  .s3-sub { width: 100%; flex-direction: row; flex-wrap: wrap; }
+  .s3-sub-item { flex: 1 1 220px; }
+  .s3-post-title { 
+    font-size: clamp(16px, 4vw, 19px); 
+    line-height: 150%;
   }
 
-  .story-image {
-    width: 100%;
-    height: 150px;
+  /* Section 4 */
+  .s4-layout { flex-direction: column; }
+  .s4-sub { width: 100%; flex-direction: row; flex-wrap: wrap; gap: 24px; }
+  .s4-sub-post { flex: 1 1 240px; }
+  .s4-sub-title { 
+    font-size: clamp(16px, 4.5vw, 19px); 
+  }
+  .s4-ads-banner { height: auto; min-height: 120px; }
+
+  /* Section 5 */
+  .s5-content { flex-direction: column; }
+  .s5-others { width: 100%; flex-direction: row; gap: 20px; }
+  .s5-other-item { flex: 1 1 240px; }
+  .s5-section-title { 
+    font-size: clamp(16px, 4.5vw, 19px); 
+  }
+  .s5-featured-title { 
+    font-size: clamp(15px, 4vw, 18px); 
+    white-space: normal; 
   }
 
-  .feature-quote {
-    grid-column: auto;
-    gap: 15px;
-    padding: 20px 0;
+  /* Section 6 */
+  .s6-article-list { flex-wrap: wrap; }
+  .s6-article-item { flex: 1 1 calc(50% - 20px); }
+  .s6-section-title { 
+    font-size: clamp(16px, 4.5vw, 19px); 
   }
 
-  .quote-icon {
-    width: 100px;
-    height: 100px;
-    font-size: 80px;
+  /* Section 7 */
+  .s7-section-title { 
+    font-size: clamp(16px, 4.5vw, 19px); 
+  }
+  .s7-article-item { width: 200px; height: 200px; }
+  .s7-article-img { width: 200px; height: 200px; }
+
+  /* Section 8 */
+  .section-type-8 { flex-direction: column; }
+  .s8-cat-title { 
+    font-size: clamp(16px, 4.5vw, 19px); 
+  }
+  .s8-left { width: 100%; }
+  .s8-sidebar { width: 100%; }
+  .s8-ads-banner { min-height: 300px; }
+}
+
+/* ── Mobile nhỏ (≤ 480px) ────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .page-body { 
+    padding: 20px 0.75rem; 
+    max-width: 100%;
   }
 
-  .main-content {
-    flex-direction: column;
+  .page-divider { 
+    margin: 16px auto; 
+    max-width: calc(100% - 1.5rem);
   }
 
-  .featured-item {
-    height: 300px;
+  .s2-outer  { 
+    padding: 20px 0; 
   }
 
-  .article-scroll-list {
-    width: 100%;
+  .s2-inner  { 
+    padding: 0 0.75rem; 
   }
 
-  .forum-container {
-    flex-direction: column;
+  /* Section 1 */
+  .s1-featured-title  { 
+    font-size: clamp(17px, 4vw, 19px); 
+    line-height: 140%;
   }
 
-  .content-layout {
-    flex-direction: column;
+  .s1-featured-desc { 
+    font-size: clamp(13px, 3vw, 15px); 
   }
 
-  .featured-article {
-    flex-direction: column;
+  .s1-story-title { 
+    font-size: clamp(15px, 3.5vw, 16px); 
   }
 
-  .featured-article img {
-    width: 100%;
-    height: 250px;
+  .s1-quote-text { 
+    font-size: clamp(14px, 3vw, 16px); 
   }
 
-  .others-articles {
-    grid-template-columns: 1fr;
+  /* Section 2 */
+  .s2-section-title { 
+    font-size: clamp(18px, 4.5vw, 20px); 
   }
 
-  .article-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  .s2-item-title    { font-size: clamp(14px, 3.5vw, 15px); }
+  .s2-featured-title  { font-size: clamp(15px, 4vw, 16px); }
+  .s2-sub-label       { font-size: clamp(12px, 3vw, 14px); }
+
+  /* Section 3 */
+  .s3-post-title  { 
+    font-size: clamp(15px, 4vw, 16px); 
   }
 
-  .section-type-8 {
-    flex-direction: column;
+  .s3-sub-title { 
+    font-size: clamp(14px, 3.5vw, 16px); 
   }
 
-  .sidebar-ads .ads-banner {
-    min-height: 200px;
+  /* Section 4-8 tiêu đề chuyên mục vàng */
+  .s4-sub-title,
+  .s5-section-title,
+  .s6-section-title,
+  .s7-section-title,
+  .s8-cat-title { 
+    font-size: clamp(16px, 4.5vw, 18px); 
+  }
+
+  /* Section 5 */
+  .s5-featured-title { 
+    font-size: clamp(15px, 4vw, 16px); 
+    white-space: normal; 
+  }
+
+  /* Section 7: Carousel items */
+  .s7-article-item { 
+    width: clamp(140px, 30vw, 180px); 
+    height: clamp(140px, 30vw, 180px); 
+  }
+
+  .s7-article-img { 
+    width: 100%; 
+    height: 100%; 
+  }
+
+  .s3-btn-create { 
+    font-size: clamp(11px, 2.5vw, 13px); 
+    padding: 8px 16px; 
+  }
+
+  /* Image aspect ratio adjustments */
+  .s1-featured-img { 
+    aspect-ratio: 4 / 3; 
+  }
+
+  .s2-featured-img { 
+    aspect-ratio: 4 / 3; 
   }
 }
 </style>

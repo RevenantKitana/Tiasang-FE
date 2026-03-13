@@ -28,7 +28,8 @@ export default {
         'Sức khỏe',
         'Du lịch',
         'Giải trí',
-        'Nền tảng & Kiến tạo'
+        'Nền tảng & Kiến tạo',
+        'Diễn đàn'
       ]
     }
   },

@@ -224,7 +224,11 @@ export default {
       console.log('Login triggered');
     },
     handleCategorySelect(category) {
-      console.log('Category selected:', category);
+      const routes = {
+        'Nền tảng & Kiến tạo': '/category/nen-tang-kien-tao',
+        'Diễn đàn': '/forum'
+      }
+      if (routes[category]) this.$router.push(routes[category])
     },
     nextPage() {
       if (this.currentPage < 4) {

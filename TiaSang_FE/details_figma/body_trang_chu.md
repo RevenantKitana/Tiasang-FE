@@ -529,7 +529,7 @@ SECTION type 4: ![alt text](image-8.png)
     }
 }
 
-SECTION type 5:
+SECTION type 5: ![alt text](image-10.png)
 {
     display: flex;
     height: 707px;
@@ -582,82 +582,409 @@ SECTION type 5:
             flex-shrink: 0;
             
             Background Image
+            {
+                height: 432px;
+                align-self: stretch;
+                aspect-ratio: 5/3;
+            }
             Text(
                 Title
+                {
+                    display: flex;
+                    width: 720px;
+                    height: 35px;
+                    flex-direction: column;
+                    justify-content: center;
+
+                    color: var(--title, #101010);
+                    font-family: Merriweather;
+                    font-size: 22px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 160%; /* 35.2px */
+                }
+
                 Description
-                Author
+                {
+                    display: flex;
+                    width: 720px;
+                    height: 62px;
+                    flex-direction: column;
+                    justify-content: center;
+
+                    color: var(--text-article-lead, #5F5F5F);
+
+                    /* Title tác giả */
+                    font-family: Archivo;
+                    font-size: 15px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 140%; /* 21px */
+                }
+                Author//Tương tự
             )
         }
         Others Articles[2 units]
         {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+            align-self: stretch;
+
             Image
-            Text(
+            {
+                width: 345px;
+                height: 207px;
+                aspect-ratio: 5/3;
+            }
+            TextSide
+            {
+                display: flex;
+                width: 345px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+
                 Title
+                {
+                    width: 345px;
+                    height: 57px;
+
+                    color: var(--title, #101010);
+
+                    /* 18/bold */
+                    font-family: Merriweather;
+                    font-size: 18px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 160%; /* 28.8px */
+                }
                 Author
-            )
+                {
+                    width: 345px;
+                    height: 22px;
+
+                    color: var(--text-article-lead, #5F5F5F);
+
+                    /* Title tác giả */
+                    font-family: Archivo;
+                    font-size: 15px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 140%; /* 21px */
+                }
+            }
         }
     }
 }
 
-SECTION type 6:
-{
-    Read More Button;
+SECTION type 6: ![alt text](image-11.png)
+{   
+    display: flex;
+    width: 1100px;
+    align-items: flex-start;
+    gap: 30px; 
+    {   
+        display: flex;
+        width: 1100px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+
+        Text
+        {
+            color: var(--31, #AD7701);
+            font-family: Merriweather;
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 160%; /* 35.2px */
+        }
+        
+        Read More Button
+        {
+            color: var(--actived-hover, #0590DE);
+            font-family: Archivo;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 160%; /* 24px */
+        }
+    }
+
     Featured Article List
     {
-        Article Item
+        display: flex;
+        width: 1100px;
+        height: 337px;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        Article Itemp[3]
         {
+            display: flex;
+            width: 345px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+            flex-shrink: 0;
+
             Background Image
-            Text(
+            {
+                width: 345px;
+                height: 207px;
+                aspect-ratio: 5/3;
+            }
+            {
+                display: flex;
+                width: 345px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+
                 Title
+                {
+                    width: 345px;
+                    height: 57px;
+
+                    color: var(--title, #101010);
+
+                    /* 18/bold */
+                    font-family: Merriweather;
+                    font-size: 18px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 160%; /* 28.8px */
+                }
                 Author
-            )
+                {
+                    width: 345px;
+                    height: 22px;
+
+                    color: var(--text-article-lead, #5F5F5F);
+
+                    /* Title tác giả */
+                    font-family: Archivo;
+                    font-size: 15px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 140%; /* 21px */
+                }
+            }
         }
     }
 }
 
-SECTION type 7:
+SECTION type 7:![alt text](image-12.png)
 {   
-    Text - Name
-    Navigation Button
+    {
+        display: flex;
+        width: 1100px;
+        height: 40px;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        Text - Name
+        {
+            color: var(--31, #AD7701);
+
+            /* Mer/22/bold */
+            font-family: Merriweather;
+            font-size: 22px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 160%; /* 35.2px */
+        }
+        Navigation Button (left - right)
+    }
 
     Article List
     {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-self: stretch;
         uint Article Item
         {
             Image
-            Text(
-                Title
-            )
+            {   
+                width: 250px;
+                height: 269px;
+
+                Title//Title đặt trong ảnh, căn lề dưới, phần có title ảnh bị đen đi
+                {
+                    display: flex;
+                    width: 218px;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 10px;
+                }
+            }
         }
     }
 
 }
-SECTION type 8:
+SECTION type 8:![alt text](image-13.png)
 {
+    display: flex;
+    width: 1100px;
+    align-items: flex-start;
+    gap: 60px;
+
     Category type 1
-    {
-        Named Category;
-        Readmore Button
+    (1){
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        {
+            display: flex;
+            width: 720px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+
+            Text "Hồ sơ và nhân vật"
+            {
+                color: var(--31, #AD7701);
+                font-family: Merriweather;
+                font-size: 22px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 160%; /* 35.2px */
+            }
+
+            Xem thêm
+            {
+                color: var(--title, #101010);
+                font-family: Archivo;
+                font-size: 15px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 160%; /* 24px */
+            }
+        }
         Article Unit[2 units]
         {
+            display: flex;
+            width: 345px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+            flex-shrink: 0;
+
             Image
-            Text(
+            {
+                width: 345px;
+                height: 207px;
+                aspect-ratio: 5/3;
+            }
+
+            {
+                display: flex;
+                width: 345px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+
                 Title
-                Author
-            )
+                {
+                    width: 345px;
+                    height: 28px;
+
+                    color: var(--title, #101010);
+
+                    /* 18/bold */
+                    font-family: Merriweather;
+                    font-size: 18px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 160%; /* 28.8px */
+                }
+                
+                AuthorName
+                {
+                    width: 345px;
+                    height: 22px;
+
+                    color: var(--text-article-lead, #5F5F5F);
+
+                    /* Title tác giả */
+                    font-family: Archivo;
+                    font-size: 15px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 140%; /* 21px */
+                }
+            }
         }
     }
     Category type 2
     {
-        Named Category;
-        Readmore Button
+        Tương tự (1)
         Article Unit[1 units]
         {
+            display: flex;
+            width: 720px;
+            align-items: flex-start;
+            gap: 20px;
+
             Image
-            Text(
+            {
+                width: 347px;
+                height: 208px;
+                flex-shrink: 0;
+                aspect-ratio: 342/205;
+            }
+
+            {
+                display: flex;
+                width: 350px;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                gap: 5px;
+                flex-shrink: 0;
+
                 Title
-                Short Description
-            )
+                {
+                    display: flex;
+                    width: 350px;
+                    height: 58px;
+                    flex-direction: column;
+                    justify-content: center;
+
+                    color: var(--title, #101010);
+
+                    /* 18/bold */
+                    font-family: Merriweather;
+                    font-size: 18px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 160%; /* 28.8px */
+                }
+
+                Short Decription
+                {
+                    width: 350px;
+                    height: 71px;
+
+                    color: var(--text-article-lead, #5F5F5F);
+
+                    /* lead 15 */
+                    font-family: Archivo;
+                    font-size: 15px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 160%; /* 24px */
+                }
+
+                AuthorName
+                {
+                    //tương tự Short Decription
+                }
+            }
         }
     }
     Sidebar Ads Banner
